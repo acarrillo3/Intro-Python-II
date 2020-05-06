@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -49,3 +50,82 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+# link for bcolors https://stackoverflow.com/questions/287871/how-to-print-colored-text-in-terminal-in-python (BLENDER BUILD SCRIPTS)
+class bcolors:
+    HEADER = '\033[95m'
+    OKGREEN = '\033[92m'
+    FAIL = '\033[91m'
+    BOLD = '\033[1m'
+    ITALIC = '\033[3m'
+    ENDC = '\033[0m'
+
+def app(): 
+    # Welcome message
+    print("")
+    print(bcolors.OKGREEN + bcolors.BOLD + "Welcome to your new adventure!" + bcolors.ENDC + bcolors.ENDC)
+    print("")
+    # Set current room to outside
+    current_room = room.get("outside")
+
+    # Instantiate user
+    print("")
+    player = Player(current_room)
+
+    # Greet player
+    player.welcome_player()
+    player.print_current_room()
+
+    # Prompt player to make a input choice
+    print("")
+    print("What direction do you travel? \n[n] north \n[q] quit")
+    direction = input(">>> ")
+
+    while not direction == 'q':
+        # Print current room according to Player class
+        # player.print_current_room()
+        # Print current room according to Room class
+        # print(current_room.name + "!")
+
+        # If player enters 'n'
+
+        if direction == 'n':
+            # If player is currently in "outside"
+            if player.current_room == room.get("outside"):
+                player.current_room = room.get("foyer")
+            elif player.current_room == room.get("narrow"):
+                player.current_room = room.get("treasure")
+            elif player.current_room == room.get("foyer"):
+                player.current_room = room.get("overlook")
+
+        elif direction == 's':
+            if player.current_room == room.get("foyer"):
+                player.current_room = room.get("outside")
+            elif player.current_room == room.get("overlook"):
+                player.current_room = room.get("foyer")
+            elif player.current_room == room.get("treasure"):
+                player.current_room = room.get("narrow")
+
+        elif direction == 'e':
+            if player.current_room == room.get("foyer"):
+                player.current_room = room.get("narrow")
+
+        elif direction == "w":
+            if player.current_room == room.get("narrow"):
+                player.current_room = room.get("foyer")
+        else:
+            print("")
+            print(bcolors.FAIL + "Invalid command" + bcolors.ENDC)
+
+        # Print current room according to Player class
+        player.print_current_room()
+
+        # FOR TOMORROW: WORK ON MAKING THIS WORK FOR AVAILABLE ROOM OPTIONS NAMES
+
+        print("")
+        print("Choose another direction:")
+        direction = input(">>> ")
+    
+    print("")
+    print("THANK YOU FOR PLAYING!")
+
+app4()
