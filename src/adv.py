@@ -4,8 +4,8 @@ from player import Player
 # Declare all the rooms
 
 room = {
-    'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+    'outside':  Room("Outside Cave Entrance", 
+"North of you, the cave mount beckons"),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -21,7 +21,6 @@ to north. The smell of gold permeates the air."""),
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
-
 
 # Link rooms together
 
@@ -50,7 +49,7 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
-# link for bcolors https://stackoverflow.com/questions/287871/how-to-print-colored-text-in-terminal-in-python (BLENDER BUILD SCRIPTS)
+
 class bcolors:
     HEADER = '\033[95m'
     OKGREEN = '\033[92m'
@@ -128,4 +127,4 @@ def app():
     print("")
     print("THANK YOU FOR PLAYING!")
 
-app4()
+app()
