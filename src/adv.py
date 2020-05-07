@@ -70,26 +70,23 @@ def app():
     # Instantiate user
     print("")
     player = Player(current_room)
+    print("")
 
     # Greet player
     player.welcome_player()
+    print("")
+    print("- - -")
     player.print_current_room()
 
     # Prompt player to make a input choice
     print("")
-    print("What direction do you travel? \n[n] north \n[q] quit")
+    print("What direction do you travel? \n[n] Foyer \n[q] Quit")
     direction = input(">>> ")
 
-    while not direction == 'q':
-        # Print current room according to Player class
-        # player.print_current_room()
-        # Print current room according to Room class
-        # print(current_room.name + "!")
+    while not direction == 'q': # Game loop
 
-        # If player enters 'n'
-
-        if direction == 'n':
-            # If player is currently in "outside"
+        if direction == 'n': # north
+            # set next room
             if player.current_room == room.get("outside"):
                 player.current_room = room.get("foyer")
             elif player.current_room == room.get("narrow"):
@@ -97,7 +94,7 @@ def app():
             elif player.current_room == room.get("foyer"):
                 player.current_room = room.get("overlook")
 
-        elif direction == 's':
+        elif direction == 's': # south
             if player.current_room == room.get("foyer"):
                 player.current_room = room.get("outside")
             elif player.current_room == room.get("overlook"):
@@ -105,22 +102,26 @@ def app():
             elif player.current_room == room.get("treasure"):
                 player.current_room = room.get("narrow")
 
-        elif direction == 'e':
+        elif direction == 'e': # east
             if player.current_room == room.get("foyer"):
                 player.current_room = room.get("narrow")
 
-        elif direction == "w":
+        elif direction == "w": # west
             if player.current_room == room.get("narrow"):
                 player.current_room = room.get("foyer")
-        else:
+        else: # invalid entry
             print("")
             print(bcolors.FAIL + "Invalid command" + bcolors.ENDC)
 
-        # Print current room according to Player class
+        # Print current room according to Player instance
+        print("")
+        print("- - -")
         player.print_current_room()
 
         options = {}
+        # if player has direction available in current room
         if player.current_room.n_to != None:
+            # set to "options" dict
             options.update({ "n": player.current_room.n_to.name })
         if player.current_room.s_to != None:
             options.update({ "s": player.current_room.s_to.name })
@@ -128,16 +129,19 @@ def app():
             options.update({ "e": player.current_room.e_to.name })
         if player.current_room.w_to != None:
             options.update({ "w": player.current_room.w_to.name })
+        options.update({ "q": "Quit" })
 
+        # print available options
         print("")
         for i in options:
             print(f"[{i}] {options[i]}")
 
+        # prompt next input
         print("")
         print("Choose another direction:")
         direction = input(">>> ")
     
     print("")
-    print("THANK YOU FOR PLAYING!")
-
+    print(bcolors.OKGREEN + bcolors.BOLD + "THANK YOU FOR PLAYING!" + bcolors.ENDC + bcolors.ENDC)
+    print("")
 app()
