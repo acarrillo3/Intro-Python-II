@@ -49,6 +49,7 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+# link for bcolors https://stackoverflow.com/questions/287871/how-to-print-colored-text-in-terminal-in-python (BLENDER BUILD SCRIPTS)
 
 class bcolors:
     HEADER = '\033[95m'
@@ -118,7 +119,19 @@ def app():
         # Print current room according to Player class
         player.print_current_room()
 
-        # FOR TOMORROW: WORK ON MAKING THIS WORK FOR AVAILABLE ROOM OPTIONS NAMES
+        options = {}
+        if player.current_room.n_to != None:
+            options.update({ "n": player.current_room.n_to.name })
+        if player.current_room.s_to != None:
+            options.update({ "s": player.current_room.s_to.name })
+        if player.current_room.e_to != None:
+            options.update({ "e": player.current_room.e_to.name })
+        if player.current_room.w_to != None:
+            options.update({ "w": player.current_room.w_to.name })
+
+        print("")
+        for i in options:
+            print(f"[{i}] {options[i]}")
 
         print("")
         print("Choose another direction:")
