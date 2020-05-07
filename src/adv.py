@@ -33,6 +33,11 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+# Add items to rooms
+room['foyer'].items.append('sword')
+room['foyer'].items.append('shield')
+room['overlook'].items.append('dagger')
+room['treasure'].items.append('staff')
 #
 # Main
 #
@@ -60,6 +65,10 @@ class bcolors:
     ENDC = '\033[0m'
 
 def app(): 
+    # brings app to the top of terminal screen
+    import os
+    os.system('cls' if os.name == 'nt' else 'clear')
+
     # Welcome message
     print("")
     print(bcolors.OKGREEN + bcolors.BOLD + "Welcome to your new adventure!" + bcolors.ENDC + bcolors.ENDC)
@@ -87,28 +96,20 @@ def app():
 
         if direction == 'n': # north
             # set next room
-            if player.current_room == room.get("outside"):
-                player.current_room = room.get("foyer")
-            elif player.current_room == room.get("narrow"):
-                player.current_room = room.get("treasure")
-            elif player.current_room == room.get("foyer"):
-                player.current_room = room.get("overlook")
+            if player.current_room.n_to != None:
+                player.current_room = player.current_room.n_to
 
         elif direction == 's': # south
-            if player.current_room == room.get("foyer"):
-                player.current_room = room.get("outside")
-            elif player.current_room == room.get("overlook"):
-                player.current_room = room.get("foyer")
-            elif player.current_room == room.get("treasure"):
-                player.current_room = room.get("narrow")
+            if player.current_room.s_to != None:
+                player.current_room = player.current_room.s_to
 
         elif direction == 'e': # east
-            if player.current_room == room.get("foyer"):
-                player.current_room = room.get("narrow")
+            if player.current_room.e_to != None:
+                player.current_room = player.current_room.e_to
 
         elif direction == "w": # west
-            if player.current_room == room.get("narrow"):
-                player.current_room = room.get("foyer")
+            if player.current_room.w_to != None:
+                player.current_room = player.current_room.w_to
         else: # invalid entry
             print("")
             print(bcolors.FAIL + "Invalid command" + bcolors.ENDC)
